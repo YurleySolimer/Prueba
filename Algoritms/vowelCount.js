@@ -11,6 +11,4 @@ const vowelCount = (str) => {
 
 }
 
-
-
 console.log(vowelCount("Elie"))
