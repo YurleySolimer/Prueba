@@ -1,0 +1,207 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Users CRUD in NodeJs",
+    "version": "1.0.0",
+    "title": "Users CRUD"
+  },
+  "host": "localhost:3000",
+  "basePath": "/API",
+  "tags": [
+    {
+      "name": "user",
+      "description": "Operaciones sobre el usuario"
+    }
+  ],
+  "schemes": ["http"],
+  "paths": {
+    "/api/users/create": {
+      "post": {
+        "tags": ["user"],
+        "description": "Create a user",
+        "operationId": "createUser",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "User created",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "User created, return a JSON with the userID"
+          }
+        }
+      }
+    },
+    "/api/users/:id": {
+      "put": {
+        "tags": ["user"],
+        "description": "Update a user",
+        "operationId": "updateUser",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "User updated",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          {
+            "in": "params",
+            "name": "id",
+            "description": "User updated",
+            "required": true,
+            "schema": {
+              "id": {
+                  "type": "string",
+                  "format": "objectId",
+                  "required": "true"
+              }
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-access-token",
+            "schema": {
+              "type": "string",
+              "format": "objectId"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User updated, return a JSON with the userID"
+          },
+          "400": {
+            "description": "Invalid ID"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "No token provided"
+          },
+          "404": {
+            "description": "User no found"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["user"],
+        "description": "Delete a user",
+        "operationId": "deleteUser",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "params",
+            "name": "id",
+            "description": "User updated",
+            "required": true,
+            "schema": {
+              "id": {
+                  "type": "string",
+                  "format": "objectId",
+                  "required": "true"
+              }
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-access-token",
+            "schema": {
+              "type": "string",
+              "format": "objectId"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User deleted, return a JSON with the userID"
+          },
+          "400": {
+            "description": "Invalid ID"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "No token provided"
+          },
+          "404": {
+            "description": "User no found"
+          }
+        }
+      }
+    },     "/api/auth/signin": {
+        "post": {
+          "tags": ["user"],
+          "description": "User Login",
+          "operationId": "User Login",
+          "produces": ["application/json"],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "User created",
+              "required": true,
+              "schema": {
+                "email": {
+                    "type":"string",
+                    "required":"true"
+                },
+                "password": {
+                    "type":"string",
+                    "required":"true"
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "User token + userID"
+            }
+          }
+        }
+      }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "lastname": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string",
+          "unique": "true",
+          "required": "true"
+        },
+        "password": {
+          "type": "string",
+          "required": "true"
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  }
+}
